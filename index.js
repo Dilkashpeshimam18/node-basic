@@ -1,5 +1,12 @@
-console.log('Hello World')
+//creating server using node
 
-const fs = require('fs')
 
-fs.writeFileSync('hello.txt', 'Hello')
+const http=require('http')
+
+const server=http.createServer((req,res)=>{
+   res.write('Hello world')
+   res.end()
+})
+
+
+server.listen(4000)
