@@ -8,6 +8,7 @@ const shopRouter=require('./routes/shop')
 const contactRouter=require('./routes/contact')
 const successRouter=require('./routes/success')
 const productRouter=require('./routes/product')
+const errorController=require('./controllers/error404')
 //parsing body
 
 app.use(bodyParser.urlencoded({extended:false}))
@@ -23,9 +24,7 @@ app.use(contactRouter)
 app.use(successRouter)
 app.use(productRouter)
 
-app.use((req,res,next)=>{
-  res.status(404).sendFile(path.join(__dirname,'views','404.html'))
-})
+app.use(errorController.get404Page)
 
 
 app.listen(4000)

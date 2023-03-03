@@ -1,10 +1,9 @@
 const express=require('express')
-const path=require('path')
+const contactController=require('../controllers/contact')
+
 const router=express.Router()
 
-router.get('/contact',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../','views','contact.html'))
-})
+router.get('/contact',contactController.getContactPage)
 
 
 module.exports=router

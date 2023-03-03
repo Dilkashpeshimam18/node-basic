@@ -1,14 +1,9 @@
 const express=require('express')
+const productController=require('../controllers/products')
 
 const router=express.Router()
 
-router.get('/product',(req,res)=>{
-    res.redirect('/')
-
-})
-router.post('/product',(req,res,next)=>{
-    console.log(req.body)
-    res.redirect('/')
-  })
+router.get('/product',productController.postAddProduct)
+router.post('/product',productController.postAddProduct)
 
 module.exports=router
