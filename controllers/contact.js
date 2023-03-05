@@ -7,3 +7,5 @@ exports.getContactPage=(req,res)=>{
 exports.getContactSuccess=(req,res)=>{
     res.sendFile(path.join(__dirname,'../','views','success.html'))
 }
+
+
