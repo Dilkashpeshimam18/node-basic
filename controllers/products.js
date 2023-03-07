@@ -77,6 +77,13 @@ updatedProduct.save()
 res.redirect('/admin')
 
 }
+
+exports.deleteproductById=(req,res,next)=>{
+   const id=req.body.productId
+  Product.deleteProduct(id)
+  res.redirect('/')
+}
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('admin/products', {
