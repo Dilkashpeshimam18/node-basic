@@ -38,6 +38,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error404');
+const db=require('./utils/db')
 
 const app = express();
 
