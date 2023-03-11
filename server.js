@@ -38,7 +38,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error404');
-const db=require('./utils/db')
 
 const app = express();
 
@@ -50,6 +49,11 @@ const shopRoutes = require('./routes/shop');
 const contactRouter=require('./routes/contact')
 const successRouter=require('./routes/success')
 const productRouter=require('./routes/product')
+
+
+
+
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
