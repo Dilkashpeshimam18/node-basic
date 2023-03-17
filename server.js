@@ -39,6 +39,8 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error404');
 const sequelize=require('./utils/db')
+const Product=require('./models/product')
+const User=require('./models/user')
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -54,6 +56,19 @@ const productRouter=require('./routes/product')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use((req,res,next)=>{
+    User.findByPk(1)
+    .then((user)=>{
+       req.user=user;
+       next();
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+})
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(contactRouter)
@@ -62,10 +77,25 @@ app.use(productRouter)
 
 app.use(errorController.get404);
 
+//product created by user-->
+Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'})
+
+User.hasMany(Product)
 
 sequelize.sync().then((res)=>{
-    console.log(res)
-    app.listen(4000);
+    return User.findByPk(1)
 
-}).catch(err=>console.log(err))
+})
+.then((user)=>{
+    if(!user){
+       return User.create({name:'Max',email:'max@gmail.com'})
+    }
+    return user
+})
+.then((user)=>{
+  console.log(user)
+  app.listen(4000);
+
+})
+.catch(err=>console.log(err))
 
