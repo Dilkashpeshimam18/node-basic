@@ -50,7 +50,9 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const contactRouter=require('./routes/contact')
 const successRouter=require('./routes/success')
-const productRouter=require('./routes/product')
+const productRouter=require('./routes/product');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-items');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,6 +84,12 @@ Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'})
 
 User.hasMany(Product)
 
+User.hasOne(Cart)
+Cart.belongsTo(User)
+Cart.belongsToMany(Product,{through:CartItem})
+Product.belongsToMany(Cart,{through:CartItem})
+
+
 sequelize.sync().then((res)=>{
     return User.findByPk(1)
 
@@ -93,8 +101,11 @@ sequelize.sync().then((res)=>{
     return user
 })
 .then((user)=>{
-  console.log(user)
-  app.listen(4000);
+    return user.createCart();
+
+})
+.then(()=>{
+    app.listen(4000);
 
 })
 .catch(err=>console.log(err))
